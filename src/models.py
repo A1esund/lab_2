@@ -2,7 +2,9 @@ import uuid
 from datetime import datetime
 from typing import Optional, List
 
-from sqlalchemy import sa, ForeignKey, DateTime, String, func
+import sqlalchemy as sa
+
+from sqlalchemy import ForeignKey, DateTime, String, func
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import (
     DeclarativeBase,
