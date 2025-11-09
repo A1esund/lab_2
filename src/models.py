@@ -79,7 +79,7 @@ class Product(Base):
         default=uuid.uuid4
     )
     name: Mapped[str] = mapped_column(nullable=False, unique=True)
-    price: Mapped[float] = mapped_column(nullable=False)          # в валюте вашего проекта
+    price: Mapped[float] = mapped_column(nullable=False) 
     description: Mapped[Optional[str]] = mapped_column(sa.Text, nullable=True)
 
     # -----------------------------------------------------------------
@@ -91,9 +91,6 @@ class Product(Base):
     )
 
 
-# -------------------------------------------------------------
-# 4. Заказ (orders)
-# -------------------------------------------------------------
 class Order(Base):
     __tablename__ = 'orders'
 
