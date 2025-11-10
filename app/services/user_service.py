@@ -1,5 +1,6 @@
 import uuid
 from typing import List, Optional
+from sqlalchemy.ext.asyncio import AsyncSession  # Добавляем импорт
 
 from app.repositories.user_repository import UserRepository, UserCreate, UserUpdate
 from src.models import User
@@ -13,7 +14,7 @@ class UserService:
 
     async def get_by_id(
         self,
-        session: "AsyncSession",
+        session: AsyncSession,  # Теперь тип определен
         user_id: uuid.UUID,
     ) -> Optional[User]:
         """Получить пользователя по его UUID."""
@@ -21,7 +22,7 @@ class UserService:
 
     async def get_by_filter(
         self,
-        session: "AsyncSession",
+        session: AsyncSession,  # Теперь тип определен
         count: int,
         page: int,
         **kwargs,
@@ -31,7 +32,7 @@ class UserService:
 
     async def create(
         self,
-        session: "AsyncSession",
+        session: AsyncSession,  # Теперь тип определен
         user_data: UserCreate,
     ) -> User:
         """Создать нового пользователя."""
@@ -39,7 +40,7 @@ class UserService:
 
     async def update(
         self,
-        session: "AsyncSession",
+        session: AsyncSession,  # Теперь тип определен
         user_id: uuid.UUID,
         user_data: UserUpdate,
     ) -> User:
@@ -51,7 +52,7 @@ class UserService:
 
     async def delete(
         self,
-        session: "AsyncSession",
+        session: AsyncSession,  # Теперь тип определен
         user_id: uuid.UUID,
     ) -> bool:
         """Удалить пользователя по его UUID."""

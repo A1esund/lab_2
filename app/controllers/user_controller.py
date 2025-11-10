@@ -61,7 +61,6 @@ class UserController(Controller):
         user_data: UserCreate,
     ) -> UserResponse:
         """Создать нового пользователя"""
-        # Конвертируем Pydantic модель в DTO репозитория
         user_create_dto = UserCreateRepo(
             username=user_data.username,
             email=user_data.email
@@ -89,8 +88,8 @@ class UserController(Controller):
         self,
         user_service: UserService,
         session: AsyncSession,
-        user_id: uuid.UUID = Parameter(),
         user_data: UserUpdate,
+        user_id: uuid.UUID = Parameter(),
     ) -> UserResponse:
         """Обновить пользователя"""
         user_update_dto = UserUpdateRepo(
