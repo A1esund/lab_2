@@ -52,15 +52,10 @@ class UserController(Controller):
         self,
         user_service: UserService,
         db_session: AsyncSession,
-        user_data: UserCreate,
+        data: UserCreate,
     ) -> UserResponse:
-        """Создать нового пользователя"""
-        # user_create_dto = UserCreate(
-        #     username=user_data.username,
-        #     email=user_data.email
-        # )
-        
-        user = await user_service.create(db_session, user_data)
+        """Создать нового пользователя"""        
+        user = await user_service.create(db_session, data)
         await db_session.commit()
         return UserResponse.model_validate(user)
 
@@ -82,15 +77,10 @@ class UserController(Controller):
         self,
         user_service: UserService,
         db_session: AsyncSession,
-        user_data: UserUpdate,
+        data: UserUpdate,
         user_id: uuid.UUID = Parameter(),
     ) -> UserResponse:
-        """Обновить пользователя"""
-        # user_update_dto = UserUpdate(
-        #     username=user_data.username,
-        #     email=user_data.email
-        # )
-        
-        user = await user_service.update(db_session, user_id, user_data)
+        """Обновить пользователя"""       
+        user = await user_service.update(db_session, user_id, data)
         await db_session.commit()
         return UserResponse.model_validate(user)
