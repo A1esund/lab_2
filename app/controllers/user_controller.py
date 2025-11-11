@@ -9,7 +9,6 @@ from litestar.params import Parameter
 
 from app.services.user_service import UserService
 from app.schemas.user import UserResponse, UserCreate, UserUpdate
-from app.schemas.user import UserCreate, UserUpdate
 
 
 class UserController(Controller):

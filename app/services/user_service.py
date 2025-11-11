@@ -2,7 +2,8 @@ import uuid
 from typing import List, Optional
 from sqlalchemy.ext.asyncio import AsyncSession  # Добавляем импорт
 
-from app.repositories.user_repository import UserRepository, UserCreate, UserUpdate
+from app.repositories.user_repository import UserRepository
+from app.schemas.user import UserCreate, UserUpdate
 from src.models import User
 
 

@@ -10,7 +10,7 @@ from app.repositories.user_repository import UserRepository
 from app.services.user_service import UserService
 
 # Настройка базы данных - используем существующий data.db
-DATABASE_URL = "sqlite+aiosqlite:///../data.db"  # Путь относительно app/main.py
+DATABASE_URL = "sqlite+aiosqlite:///./data.db"  # Путь относительно текущей директории
 
 engine = create_async_engine(
     DATABASE_URL, 
