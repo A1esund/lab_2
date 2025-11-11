@@ -9,10 +9,14 @@ from app.controllers.user_controller import UserController
 from app.repositories.user_repository import UserRepository
 from app.services.user_service import UserService
 
-# Настройка базы данных
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+asyncpg://user:password@localhost/dbname")
+# Настройка базы данных - используем существующий data.db
+DATABASE_URL = "sqlite+aiosqlite:///../data.db"  # Путь относительно app/main.py
 
-engine = create_async_engine(DATABASE_URL, echo=True)
+engine = create_async_engine(
+    DATABASE_URL, 
+    echo=True,
+    connect_args={"check_same_thread": False}  # Важно для SQLite
+)
 async_session_factory = sessionmaker(
     engine, class_=AsyncSession, expire_on_commit=False
 )

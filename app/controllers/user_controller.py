@@ -14,10 +14,6 @@ from app.repositories.user_repository import UserCreate as UserCreateRepo, UserU
 
 class UserController(Controller):
     path = "/users"
-    dependencies = {
-        "db_session": Provide("db_session"),
-        "user_service": Provide("user_service"),
-    }
 
     @get("/{user_id:uuid}")
     async def get_user_by_id(

@@ -4,21 +4,7 @@ from sqlalchemy import select, update, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.models import User
-
-
-class UserCreate:
-    """Схема для создания пользователя"""
-    def __init__(self, username: str, email: str):
-        self.username = username
-        self.email = email
-
-
-class UserUpdate:
-    """Схема для обновления пользователя"""
-    def __init__(self, username: Optional[str] = None, email: Optional[str] = None):
-        self.username = username
-        self.email = email
-
+from app.schemas.user import UserCreate, UserUpdate
 
 class UserRepository:
     """Репозиторий для работы с пользователями"""
