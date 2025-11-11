@@ -27,10 +27,7 @@ class User(Base):
     created_at: Mapped[datetime] = mapped_column(default=datetime.now) 		
     updated_at: Mapped[datetime] = mapped_column(default=datetime.now, onupdate=datetime.now)
 
-    description: Mapped[str | None] = mapped_column(
-    nullable=True,          # можно хранить NULL, если описание не задано
-    default=None            # при создании записи будет set на None
-    )
+    description: Mapped[Optional[str]] = mapped_column(nullable=True, default=None)
 
     # -----------------------------------------------------------------
     # Связи (1 → N): пользователь имеет несколько заказов и адресов

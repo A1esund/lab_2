@@ -9,7 +9,7 @@ from litestar.params import Parameter
 
 from app.services.user_service import UserService
 from app.schemas.user import UserResponse, UserCreate, UserUpdate
-from app.repositories.user_repository import UserCreate as UserCreateRepo, UserUpdate as UserUpdateRepo
+from app.schemas.user import UserCreate, UserUpdate
 
 
 class UserController(Controller):
@@ -56,12 +56,12 @@ class UserController(Controller):
         user_data: UserCreate,
     ) -> UserResponse:
         """Создать нового пользователя"""
-        user_create_dto = UserCreateRepo(
-            username=user_data.username,
-            email=user_data.email
-        )
+        # user_create_dto = UserCreate(
+        #     username=user_data.username,
+        #     email=user_data.email
+        # )
         
-        user = await user_service.create(db_session, user_create_dto)
+        user = await user_service.create(db_session, user_data)
         await db_session.commit()
         return UserResponse.model_validate(user)
 
@@ -87,11 +87,11 @@ class UserController(Controller):
         user_id: uuid.UUID = Parameter(),
     ) -> UserResponse:
         """Обновить пользователя"""
-        user_update_dto = UserUpdateRepo(
-            username=user_data.username,
-            email=user_data.email
-        )
+        # user_update_dto = UserUpdate(
+        #     username=user_data.username,
+        #     email=user_data.email
+        # )
         
-        user = await user_service.update(db_session, user_id, user_update_dto)
+        user = await user_service.update(db_session, user_id, user_data)
         await db_session.commit()
         return UserResponse.model_validate(user)
