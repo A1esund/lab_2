@@ -9,8 +9,8 @@
 2. Создать и активировать виртуальное окружение:
    - В Windows:
      ```bash
-     python -m venv venv
-     venv\Scripts\activate
+     python -m venv .venv
+     .venv\Scripts\activate
      ```
    - В Linux/Mac:
      ```bash
@@ -34,4 +34,4 @@
 
 Также можно запустить приложение напрямую из файла main.py:
 ```bash
-python app/main.py
+python -m app.main
