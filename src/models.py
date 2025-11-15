@@ -76,8 +76,9 @@ class Product(Base):
         default=uuid.uuid4
     )
     name: Mapped[str] = mapped_column(nullable=False, unique=True)
-    price: Mapped[float] = mapped_column(nullable=False) 
+    price: Mapped[float] = mapped_column(nullable=False)
     description: Mapped[Optional[str]] = mapped_column(sa.Text, nullable=True)
+    stock_quantity: Mapped[int] = mapped_column(nullable=False, default=0)
 
     # -----------------------------------------------------------------
     # Связи
@@ -86,6 +87,17 @@ class Product(Base):
         back_populates="product",
         cascade="all, delete-orphan"
     )
+
+
+# Промежуточная таблица для связи "многие ко многим" между заказами и продуктами
+order_items = sa.Table(
+    'order_items',
+    Base.metadata,
+    sa.Column('order_id', sa.ForeignKey('orders.id', ondelete='CASCADE'), primary_key=True),
+    sa.Column('product_id', sa.ForeignKey('products.id', ondelete='CASCADE'), primary_key=True),
+    sa.Column('quantity', sa.Integer, nullable=False, default=1),
+    sa.Column('price_at_order', sa.Float, nullable=False)  # цена продукта на момент заказа
+)
 
 
 class Order(Base):
@@ -102,12 +114,8 @@ class Order(Base):
         sa.ForeignKey('addresses.id', ondelete='SET NULL'),
         nullable=True   # адрес может быть удалён, но заказ останется
     )
-    product_id: Mapped[uuid.UUID] = mapped_column(
-        sa.ForeignKey('products.id', ondelete='CASCADE')
-    )
 
-    quantity: Mapped[int] = mapped_column(nullable=False, default=1)
-    total_price: Mapped[float] = mapped_column(nullable=False)  # price * quantity
+    total_price: Mapped[float] = mapped_column(nullable=False, default=0.0)  # общая цена заказа
 
     status: Mapped[str] = mapped_column(
         sa.String(50),
@@ -126,4 +134,8 @@ class Order(Base):
     # -----------------------------------------------------------------
     user: Mapped["User"] = relationship(back_populates="orders")
     address: Mapped[Optional["Address"]] = relationship(back_populates="orders")
-    product: Mapped["Product"] = relationship(back_populates="orders")
+    products: Mapped[List["Product"]] = relationship(
+        "Product",
+        secondary="order_items",
+        back_populates="orders"
+    )

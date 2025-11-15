@@ -12,3 +12,15 @@ dependencies = [
     "pydantic[email]>=2.0.0",
     "uvicorn>=0.24.0",
 ]
+[project.optional-dependencies]
+test = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.23.0",
+    "polyfactory>=2.0.0",
+    "pytest-cov>=4.0.0"
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+addopts = "--verbose --color=yes"
